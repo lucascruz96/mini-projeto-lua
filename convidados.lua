@@ -56,11 +56,36 @@ function consultarConvidado()
 end
 
 function listarConvidados()
-    print("Listar Convidados")
+    conteudoArquivo = lerArquivo("data/convidados.json")
+    local convidados, pos, erro = json.decode (conteudoArquivo, 1, nil)
+    if (erro) 
+    then
+        print ("Erro: ", erro)
+    else
+        print ("Lista de convidados: ")
+        for i = 1,#convidados do
+            print(string.format("Nome: %s \t Cpf: %s", convidados[i].nome, convidados[i].cpf))
+        end
+    end
 end
 
 function listarRemovidos()
-    print("Listar Removidos")
+    conteudoArquivo = lerArquivo("data/removidos.json")
+    local removidos, pos, erro = json.decode (conteudoArquivo, 1, nil)
+    if (erro) 
+    then
+        print ("Erro: ", erro)
+    else
+        print ("Lista de removidos: ")
+        for i = 1,#removidos do
+            print(string.format("Nome: %s\tCpf: %s\tMotivo: %s", removidos[i].nome, removidos[i].cpf, removidos[i].motivo))
+        end
+    end
+end
+
+function lerArquivo(caminhoArquivo)
+    arquivo = io.open(caminhoArquivo, "r")
+    return arquivo:read("*a")
 end
 
 main()
